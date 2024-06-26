@@ -11,7 +11,6 @@
   "devDependencies": {
     "@eslint/js": "^9.5.0",
     "eslint": "^9.5.0",
-    "eslint-plugin-perfectionist": "^2.11.0",
     "eslint-plugin-simple-import-sort": "^12.1.0"
   }
 }

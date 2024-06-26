@@ -1,5 +1,4 @@
 import js from "@eslint/js";
-import perfectionist from "eslint-plugin-perfectionist";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 export default [
@@ -7,7 +6,6 @@ export default [
 
 	{
 		plugins: {
-			perfectionist,
 			"simple-import-sort": simpleImportSort,
 		},
 		rules: {
