@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Helper script to be used as a pre-commit hook.
+
+gitleaksEnabled() {
+    # Determine if the pre-commit hook for gitleaks is enabled.
+    local out
+    out=$(git config --bool hooks.gitleaks)
+    if [ "$out" == "false" ]; then
+        return 1
+    fi
+    return 0
+}
+
+# Check if gitleaks is installed
+if ! command -v gitleaks &> /dev/null; then
+    echo 'Error: gitleaks is not installed on your system.'
+    echo 'Please install gitleaks to use this pre-commit hook.'
+    exit 1
+fi
+
+if gitleaksEnabled; then
+    gitleaks protect -v --staged
+    exitCode=$?
+    if [ $exitCode -eq 1 ]; then
+        echo 'Warning: gitleaks has detected sensitive information in your changes.
+To disable the gitleaks precommit hook run the following command:
+
+    git config hooks.gitleaks false
+'
+        exit 1
+    fi
+else
+    echo 'gitleaks precommit disabled (enable with `git config hooks.gitleaks true`)'
+fi
