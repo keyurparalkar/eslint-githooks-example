@@ -12,6 +12,16 @@ gitleaksEnabled() {
     return 0
 }
 
+# List the staged *.test.js files
+stagedTestFiles=$(git diff --cached --name-only --diff-filter=ACM | grep '\.test\.js$')
+
+if [ -n "$stagedTestFiles" ]; then
+    echo "Staged *.test.js files:"
+    yarn run test --coverage --bail --findRelatedTests $stagedTestFiles
+else
+    echo "No *.test.js files are staged."
+fi
+
 # Check if gitleaks is installed
 if ! command -v gitleaks &> /dev/null; then
     echo 'Error: gitleaks is not installed on your system.'
